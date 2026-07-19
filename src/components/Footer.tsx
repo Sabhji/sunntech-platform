@@ -36,7 +36,12 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-3">Connect</h3>
+            <h3 className="font-semibold mb-3">Contact</h3>
+            <ul className="space-y-2 text-sm">
+              <li className="text-muted-foreground">sidharth@sunntech.in</li>
+              <li className="text-muted-foreground">+91 9350360894</li>
+            </ul>
+            <h3 className="font-semibold mb-3 mt-4">Connect</h3>
             <div className="flex space-x-4">
               <a href="#" className="text-muted-foreground hover:text-primary">
                 <Github className="h-5 w-5" />

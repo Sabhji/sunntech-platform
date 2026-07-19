@@ -118,14 +118,14 @@ export default function ContactPage() {
                       <Mail className="h-5 w-5 text-primary" />
                       <div>
                         <p className="text-sm text-muted-foreground">Email</p>
-                        <p className="font-medium">contact@sunntech.in</p>
+                        <p className="font-medium">sidharth@sunntech.in</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Phone className="h-5 w-5 text-primary" />
                       <div>
                         <p className="text-sm text-muted-foreground">Phone</p>
-                        <p className="font-medium">+91 XXXXX XXXXX</p>
+                        <p className="font-medium">+91 9350360894</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
