@@ -22,11 +22,28 @@ export default function SignupPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!")
+      alert("ERROR: Passwords do not match!")
+      return
+    }
+    if (formData.password.length < 8) {
+      alert("ERROR: Password must be at least 8 characters!")
       return
     }
     console.log("Signup attempt:", formData)
-    alert("Account creation simulated. In production, this would connect to your backend.")
+    
+    // Store user data in localStorage for simulation
+    const userData = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      createdAt: new Date().toISOString()
+    }
+    localStorage.setItem('sunntech_user', JSON.stringify(userData))
+    
+    alert("SUCCESS: Account initialized! Redirecting to login...")
+    setTimeout(() => {
+      window.location.href = '/login'
+    }, 1500)
   }
 
   return (

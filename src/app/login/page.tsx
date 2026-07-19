@@ -18,8 +18,22 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Login attempt:", formData)
-    alert("Authentication simulated. In production, this would connect to your backend.")
+    
+    // Check localStorage for user data
+    const storedUser = localStorage.getItem('sunntech_user')
+    if (storedUser) {
+      const userData = JSON.parse(storedUser)
+      if (formData.username === userData.username && formData.password === userData.password) {
+        localStorage.setItem('sunntech_authenticated', 'true')
+        alert("SUCCESS: Authentication verified! Access granted.")
+        setTimeout(() => {
+          window.location.href = '/dashboard'
+        }, 1000)
+        return
+      }
+    }
+    
+    alert("ERROR: Invalid credentials! Access denied.")
   }
 
   return (
