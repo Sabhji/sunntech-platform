@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Terminal, Search, TrendingUp, Users, Clock, DollarSign, ArrowRight, Cpu, Lock, ShieldAlert, Zap } from "lucide-react"
+import { Terminal, Search, TrendingUp, Users, Clock, DollarSign, ArrowRight, Cpu, Lock, ShieldAlert, Zap, Code, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -52,6 +52,21 @@ export default function Home() {
                 <ShieldAlert className="mr-2 h-4 w-4" />
                 POST MISSION
               </Button>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <Link href="/login/freelancer">
+                <Button className="w-full cyber-button" variant="outline">
+                  <Code className="mr-2 h-4 w-4" />
+                  FREELANCER_LOGIN
+                </Button>
+              </Link>
+              <Link href="/login/company">
+                <Button className="w-full cyber-button" variant="outline">
+                  <Building2 className="mr-2 h-4 w-4" />
+                  COMPANY_LOGIN
+                </Button>
+              </Link>
             </div>
           </div>
         </section>

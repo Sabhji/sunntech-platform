@@ -1,12 +1,21 @@
 "use client"
 
 import Link from "next/link"
-import { Shield, Menu, X, Terminal, User, LogIn } from "lucide-react"
+import { Shield, Menu, X, Terminal, User, LogIn, Code, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userType, setUserType] = useState<"freelancer" | "company" | null>(null)
+
+  useEffect(() => {
+    const auth = localStorage.getItem('sunntech_authenticated')
+    const type = localStorage.getItem('sunntech_user_type') as "freelancer" | "company" | null
+    setIsAuthenticated(auth === 'true')
+    setUserType(type)
+  }, [])
 
   return (
     <nav className="hacker-border bg-background/95 backdrop-blur">
@@ -24,22 +33,46 @@ export default function Navbar() {
             <Link href="/projects" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
               <span className="text-primary">{">"}</span> PROJECTS
             </Link>
-            <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
-              <span className="text-primary">{">"}</span> DASHBOARD
-            </Link>
+            {isAuthenticated && userType === 'freelancer' && (
+              <Link href="/freelancer/dashboard" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
+                <span className="text-primary">{">"}</span> DASHBOARD
+              </Link>
+            )}
+            {isAuthenticated && userType === 'company' && (
+              <>
+                <Link href="/company/dashboard" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
+                  <span className="text-primary">{">"}</span> DASHBOARD
+                </Link>
+                <Link href="/company/post-project" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
+                  <span className="text-primary">{">"}</span> POST_PROJECT
+                </Link>
+              </>
+            )}
             <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
               <span className="text-primary">{">"}</span> ABOUT
             </Link>
             <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
               <span className="text-primary">{">"}</span> CONTACT
             </Link>
-            <Link href="/login" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
-              <span className="text-primary">{">"}</span> LOGIN
-            </Link>
-            <Button className="cyber-button">
-              <Terminal className="mr-2 h-4 w-4" />
-              POST PROJECT
-            </Button>
+            {!isAuthenticated ? (
+              <>
+                <Link href="/login/freelancer" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
+                  <span className="text-primary">{">"}</span> FREELANCER_LOGIN
+                </Link>
+                <Link href="/login/company" className="text-sm font-medium hover:text-primary transition-colors terminal-text">
+                  <span className="text-primary">{">"}</span> COMPANY_LOGIN
+                </Link>
+              </>
+            ) : (
+              <Button className="cyber-button" onClick={() => {
+                localStorage.removeItem('sunntech_authenticated')
+                localStorage.removeItem('sunntech_user_type')
+                window.location.href = '/'
+              }}>
+                <LogIn className="mr-2 h-4 w-4" />
+                LOGOUT
+              </Button>
+            )}
           </div>
 
           <button
@@ -58,22 +91,46 @@ export default function Navbar() {
             <Link href="/projects" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
               <span className="text-primary">{">"}</span> PROJECTS
             </Link>
-            <Link href="/dashboard" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
-              <span className="text-primary">{">"}</span> DASHBOARD
-            </Link>
+            {isAuthenticated && userType === 'freelancer' && (
+              <Link href="/freelancer/dashboard" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
+                <span className="text-primary">{">"}</span> DASHBOARD
+              </Link>
+            )}
+            {isAuthenticated && userType === 'company' && (
+              <>
+                <Link href="/company/dashboard" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
+                  <span className="text-primary">{">"}</span> DASHBOARD
+                </Link>
+                <Link href="/company/post-project" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
+                  <span className="text-primary">{">"}</span> POST_PROJECT
+                </Link>
+              </>
+            )}
             <Link href="/about" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
               <span className="text-primary">{">"}</span> ABOUT
             </Link>
             <Link href="/contact" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
               <span className="text-primary">{">"}</span> CONTACT
             </Link>
-            <Link href="/login" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
-              <span className="text-primary">{">"}</span> LOGIN
-            </Link>
-            <Button className="w-full cyber-button">
-              <Terminal className="mr-2 h-4 w-4" />
-              POST PROJECT
-            </Button>
+            {!isAuthenticated ? (
+              <>
+                <Link href="/login/freelancer" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
+                  <span className="text-primary">{">"}</span> FREELANCER_LOGIN
+                </Link>
+                <Link href="/login/company" className="block text-sm font-medium hover:text-primary transition-colors terminal-text">
+                  <span className="text-primary">{">"}</span> COMPANY_LOGIN
+                </Link>
+              </>
+            ) : (
+              <Button className="w-full cyber-button" onClick={() => {
+                localStorage.removeItem('sunntech_authenticated')
+                localStorage.removeItem('sunntech_user_type')
+                window.location.href = '/'
+              }}>
+                <LogIn className="mr-2 h-4 w-4" />
+                LOGOUT
+              </Button>
+            )}
           </div>
         )}
       </div>
