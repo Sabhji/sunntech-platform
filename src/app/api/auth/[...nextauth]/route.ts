@@ -4,6 +4,9 @@ import connectDB from '@/lib/mongodb'
 import User from '@/models/User'
 import { logLoginAttempt, logAccountLockout } from '@/lib/security-logger'
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic'
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({

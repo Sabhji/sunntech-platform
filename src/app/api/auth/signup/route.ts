@@ -4,6 +4,9 @@ import User from '@/models/User'
 import { validateAndSanitizeInput, registerSchema } from '@/lib/validation'
 import { logLoginAttempt } from '@/lib/security-logger'
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()

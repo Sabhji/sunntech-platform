@@ -4,6 +4,9 @@ import Client from '@/models/Client'
 import { sanitizeMongoQuery, isValidObjectId } from '@/lib/mongodb'
 import { applyAPISecurityHeaders, applyCORSHeaders, checkAPIRateLimit } from '@/lib/api-security'
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic'
+
 // GET all clients
 export async function GET(request: NextRequest) {
   try {
