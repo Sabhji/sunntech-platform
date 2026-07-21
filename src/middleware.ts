@@ -33,7 +33,7 @@ const blockedUserAgents = [
 ]
 
 // Block suspicious IP patterns (basic implementation)
-const blockedIPs = [
+const blockedIPs: string[] = [
   // Add any known malicious IPs here
 ]
 
