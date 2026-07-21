@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import InteractiveKeyboard from "@/components/InteractiveKeyboard"
+import WelcomeModal from "@/components/WelcomeModal"
 import { projects } from "@/data/projects"
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col matrix-bg">
+      <WelcomeModal />
       <Navbar />
       
       <main className="flex-1">
