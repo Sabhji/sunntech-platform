@@ -2,6 +2,7 @@ import { validateEnvVariables } from './security'
 
 // Required environment variables for the application
 const REQUIRED_ENV_VARS = [
+  'MONGODB_URI',
   'NEXTAUTH_SECRET',
   'NEXTAUTH_URL',
 ]
