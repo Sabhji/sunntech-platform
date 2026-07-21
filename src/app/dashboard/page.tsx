@@ -128,7 +128,7 @@ export default function DashboardPage() {
             <div className="flex gap-2 mb-6">
               <Button
                 onClick={() => setActiveTab('overview')}
-                className={activeTab === 'overview' ? 'cyber-button' : 'cyber-button variant="outline"'}
+                className={activeTab === 'overview' ? 'cyber-button' : ''}
                 variant={activeTab === 'overview' ? 'default' : 'outline'}
               >
                 <Terminal className="mr-2 h-4 w-4" />
@@ -136,7 +136,7 @@ export default function DashboardPage() {
               </Button>
               <Button
                 onClick={() => setActiveTab('clients')}
-                className={activeTab === 'clients' ? 'cyber-button' : 'cyber-button variant="outline"'}
+                className={activeTab === 'clients' ? 'cyber-button' : ''}
                 variant={activeTab === 'clients' ? 'default' : 'outline'}
               >
                 <Building2 className="mr-2 h-4 w-4" />
@@ -144,7 +144,7 @@ export default function DashboardPage() {
               </Button>
               <Button
                 onClick={() => setActiveTab('customers')}
-                className={activeTab === 'customers' ? 'cyber-button' : 'cyber-button variant="outline"'}
+                className={activeTab === 'customers' ? 'cyber-button' : ''}
                 variant={activeTab === 'customers' ? 'default' : 'outline'}
               >
                 <Users className="mr-2 h-4 w-4" />
