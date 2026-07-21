@@ -48,13 +48,13 @@ export default function Footer() {
             </ul>
             <h3 className="font-semibold mb-3 mt-4 terminal-text"><span className="text-primary">{">"}</span> CONNECT</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-primary">
+              <a href="https://github.com/Sabhji/sunntech-platform" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
                 <Github className="h-5 w-5" />
               </a>
               <a href="#" className="text-muted-foreground hover:text-primary">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary">
+              <a href="https://www.linkedin.com/in/sidharth" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
