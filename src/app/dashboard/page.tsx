@@ -1,21 +1,27 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Terminal, Activity, Network, Shield, Lock, AlertTriangle, Zap, Cpu, HardDrive, Wifi, Globe, Code, FileText, Settings } from "lucide-react"
+import { useSession, signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { Terminal, Activity, Network, Shield, Lock, AlertTriangle, Zap, Cpu, HardDrive, Wifi, Globe, Code, FileText, Settings, LogOut, Building2, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
+import ClientForm from "@/components/ClientForm"
+import CustomerForm from "@/components/CustomerForm"
 
 export default function DashboardPage() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
   const [currentTime, setCurrentTime] = useState(new Date())
   const [networkActivity, setNetworkActivity] = useState(0)
   const [cpuUsage, setCpuUsage] = useState(45)
   const [memoryUsage, setMemoryUsage] = useState(62)
   const [activeConnections, setActiveConnections] = useState(127)
-  const [securityLevel, setSecurityLevel] = useState("HIGH")
+  const [activeTab, setActiveTab] = useState<'overview' | 'clients' | 'customers'>('overview')
   const [logs, setLogs] = useState([
     { time: "14:23:45", type: "INFO", message: "System initialization complete" },
     { time: "14:23:46", type: "SUCCESS", message: "Connection established to secure server" },
@@ -23,6 +29,12 @@ export default function DashboardPage() {
     { time: "14:23:48", type: "SUCCESS", message: "Firewall active - 127 rules loaded" },
     { time: "14:23:49", type: "WARNING", message: "Unusual traffic pattern detected" }
   ])
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login")
+    }
+  }, [status, router])
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
@@ -71,6 +83,18 @@ export default function DashboardPage() {
     }
   }
 
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center matrix-bg">
+        <div className="terminal-text">Loading...</div>
+      </div>
+    )
+  }
+
+  if (!session) {
+    return null
+  }
+
   return (
     <div className="min-h-screen flex flex-col matrix-bg">
       <Navbar />
@@ -86,7 +110,51 @@ export default function DashboardPage() {
               <span className="ml-auto text-xs text-muted-foreground terminal-text">{currentTime.toLocaleTimeString()}</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h1 className="text-2xl font-bold terminal-text glitch mb-1">
+                  <span className="text-primary">{">"}</span> WELCOME_BACK
+                </h1>
+                <p className="text-sm text-muted-foreground terminal-text">
+                  Logged in as: {session.user?.email}
+                </p>
+              </div>
+              <Button onClick={() => signOut()} className="cyber-button" variant="outline">
+                <LogOut className="mr-2 h-4 w-4" />
+                LOGOUT
+              </Button>
+            </div>
+
+            <div className="flex gap-2 mb-6">
+              <Button
+                onClick={() => setActiveTab('overview')}
+                className={activeTab === 'overview' ? 'cyber-button' : 'cyber-button variant="outline"'}
+                variant={activeTab === 'overview' ? 'default' : 'outline'}
+              >
+                <Terminal className="mr-2 h-4 w-4" />
+                OVERVIEW
+              </Button>
+              <Button
+                onClick={() => setActiveTab('clients')}
+                className={activeTab === 'clients' ? 'cyber-button' : 'cyber-button variant="outline"'}
+                variant={activeTab === 'clients' ? 'default' : 'outline'}
+              >
+                <Building2 className="mr-2 h-4 w-4" />
+                CLIENTS
+              </Button>
+              <Button
+                onClick={() => setActiveTab('customers')}
+                className={activeTab === 'customers' ? 'cyber-button' : 'cyber-button variant="outline"'}
+                variant={activeTab === 'customers' ? 'default' : 'outline'}
+              >
+                <Users className="mr-2 h-4 w-4" />
+                CUSTOMERS
+              </Button>
+            </div>
+
+            {activeTab === 'overview' && (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               <Card className="hacker-border terminal-window">
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
@@ -298,8 +366,52 @@ export default function DashboardPage() {
                     </Button>
                   </CardContent>
                 </Card>
+              </>
+            )}
+
+            {activeTab === 'clients' && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <ClientForm />
+                <Card className="hacker-border terminal-window">
+                  <CardHeader>
+                    <CardTitle className="terminal-text flex items-center gap-2">
+                      <Building2 className="h-5 w-5 text-primary" />
+                      <span className="text-primary">{">"}</span> CLIENTS_LIST
+                    </CardTitle>
+                    <CardDescription className="terminal-text">
+                      View and manage your clients
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-center py-8 text-muted-foreground terminal-text">
+                      No clients added yet. Use the form to add your first client.
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-            </div>
+            )}
+
+            {activeTab === 'customers' && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <CustomerForm />
+                <Card className="hacker-border terminal-window">
+                  <CardHeader>
+                    <CardTitle className="terminal-text flex items-center gap-2">
+                      <Users className="h-5 w-5 text-primary" />
+                      <span className="text-primary">{">"}</span> CUSTOMERS_LIST
+                    </CardTitle>
+                    <CardDescription className="terminal-text">
+                      View and manage your customers
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-center py-8 text-muted-foreground terminal-text">
+                      No customers added yet. Use the form to add your first customer.
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
           </div>
         </div>
       </main>

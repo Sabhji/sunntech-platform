@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Terminal, Lock, User, Eye, EyeOff, AlertCircle } from "lucide-react"
+import { signIn } from "next-auth/react"
+import { Terminal, Lock, Mail, Eye, EyeOff, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import Navbar from "@/components/Navbar"
@@ -12,28 +12,34 @@ import Footer from "@/components/Footer"
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: ""
   })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Check localStorage for user data
-    const storedUser = localStorage.getItem('sunntech_user')
-    if (storedUser) {
-      const userData = JSON.parse(storedUser)
-      if (formData.username === userData.username && formData.password === userData.password) {
-        localStorage.setItem('sunntech_authenticated', 'true')
-        alert("SUCCESS: Authentication verified! Access granted.")
-        setTimeout(() => {
-          window.location.href = '/dashboard'
-        }, 1000)
-        return
+    setLoading(true)
+    setError("")
+
+    try {
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        setError(result.error)
+      } else if (result?.ok) {
+        window.location.href = "/dashboard"
       }
+    } catch (error) {
+      setError("An error occurred during login")
+    } finally {
+      setLoading(false)
     }
-    
-    alert("ERROR: Invalid credentials! Access denied.")
   }
 
   return (
@@ -61,18 +67,24 @@ export default function LoginPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <div className="p-3 bg-red-500/10 border border-red-500/30 rounded text-red-400 text-sm terminal-text">
+                  <span className="text-primary">{">"}</span> {error}
+                </div>
+              )}
+
               <div>
-                <label htmlFor="username" className="block text-sm font-medium mb-2 terminal-text">
-                  <span className="text-primary">{">"}</span> USERNAME
+                <label htmlFor="email" className="block text-sm font-medium mb-2 terminal-text">
+                  <span className="text-primary">{">"}</span> EMAIL
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-primary" />
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-primary" />
                   <Input
-                    id="username"
-                    type="text"
-                    placeholder="Enter username"
-                    value={formData.username}
-                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                    id="email"
+                    type="email"
+                    placeholder="Enter email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="pl-10 hacker-border bg-background/50 terminal-text"
                     required
                   />
@@ -114,9 +126,9 @@ export default function LoginPage() {
                 </Link>
               </div>
 
-              <Button type="submit" className="w-full cyber-button">
+              <Button type="submit" disabled={loading} className="w-full cyber-button">
                 <Terminal className="mr-2 h-4 w-4" />
-                AUTHENTICATE
+                {loading ? 'AUTHENTICATING...' : 'AUTHENTICATE'}
               </Button>
 
               <div className="text-center">

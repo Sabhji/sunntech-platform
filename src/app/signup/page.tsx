@@ -13,37 +13,55 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    role: "freelancer"
   })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setLoading(true)
+    setError("")
+    setSuccess(false)
+
     if (formData.password !== formData.confirmPassword) {
-      alert("ERROR: Passwords do not match!")
+      setError("Passwords do not match")
+      setLoading(false)
       return
     }
-    if (formData.password.length < 8) {
-      alert("ERROR: Password must be at least 8 characters!")
-      return
+
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSuccess(true)
+        setTimeout(() => {
+          window.location.href = '/login'
+        }, 2000)
+      } else {
+        setError(data.error || 'Failed to create account')
+      }
+    } catch (error) {
+      setError('An error occurred during signup')
+    } finally {
+      setLoading(false)
     }
-    console.log("Signup attempt:", formData)
-    
-    // Store user data in localStorage for simulation
-    const userData = {
-      username: formData.username,
-      email: formData.email,
-      password: formData.password,
-      createdAt: new Date().toISOString()
-    }
-    localStorage.setItem('sunntech_user', JSON.stringify(userData))
-    
-    alert("SUCCESS: Account initialized! Redirecting to login...")
-    setTimeout(() => {
-      window.location.href = '/login'
-    }, 1500)
   }
 
   return (
@@ -71,18 +89,29 @@ export default function SignupPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
+              {error && (
+                <div className="p-3 bg-red-500/10 border border-red-500/30 rounded text-red-400 text-sm terminal-text">
+                  <span className="text-primary">{">"}</span> {error}
+                </div>
+              )}
+              {success && (
+                <div className="p-3 bg-green-500/10 border border-green-500/30 rounded text-green-400 text-sm terminal-text">
+                  <span className="text-primary">{">"}</span> Account created successfully! Redirecting...
+                </div>
+              )}
+
               <div>
-                <label htmlFor="username" className="block text-sm font-medium mb-2 terminal-text">
-                  <span className="text-primary">{">"}</span> USERNAME
+                <label htmlFor="name" className="block text-sm font-medium mb-2 terminal-text">
+                  <span className="text-primary">{">"}</span> NAME
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-4 w-4 text-primary" />
                   <Input
-                    id="username"
+                    id="name"
                     type="text"
-                    placeholder="Choose username"
-                    value={formData.username}
-                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                    placeholder="Your full name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="pl-10 hacker-border bg-background/50 terminal-text"
                     required
                   />
@@ -164,9 +193,9 @@ export default function SignupPage() {
                 </label>
               </div>
 
-              <Button type="submit" className="w-full cyber-button">
+              <Button type="submit" disabled={loading} className="w-full cyber-button">
                 <Terminal className="mr-2 h-4 w-4" />
-                INITIALIZE
+                {loading ? 'INITIALIZING...' : 'INITIALIZE'}
               </Button>
 
               <div className="text-center">
