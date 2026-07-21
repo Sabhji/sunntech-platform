@@ -43,6 +43,16 @@ export function middleware(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
   const path = request.nextUrl.pathname
 
+  // HTTPS enforcement in production
+  if (process.env.NODE_ENV === 'production') {
+    const proto = request.headers.get('x-forwarded-proto')
+    if (proto !== 'https') {
+      const host = request.headers.get('host')
+      const url = new URL(`https://${host}${request.nextUrl.pathname}${request.nextUrl.search}`)
+      return NextResponse.redirect(url, 301)
+    }
+  }
+
   // Apply security headers
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value)

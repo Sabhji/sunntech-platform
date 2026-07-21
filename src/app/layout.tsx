@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "@/lib/env-validation";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 
