@@ -4,19 +4,19 @@ import { validateEnvVariables } from './security'
 const REQUIRED_ENV_VARS = [
   'NEXTAUTH_SECRET',
   'NEXTAUTH_URL',
-] as const
+]
 
 // Optional but recommended environment variables
 const RECOMMENDED_ENV_VARS = [
   'DATABASE_URL',
   'NEXT_PUBLIC_API_URL',
-] as const
+]
 
 export function validateEnvironment(): { isValid: boolean; missing: string[]; warnings: string[] } {
   const warnings: string[] = []
   
   // Validate required environment variables
-  const requiredValidation = validateEnvVariables(REQUIRED_ENV_VARS as string[])
+  const requiredValidation = validateEnvVariables(REQUIRED_ENV_VARS)
   
   // Check recommended variables
   const missingRecommended: string[] = []
