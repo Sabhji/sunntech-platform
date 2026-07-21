@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" width="500" height="150">
+  <defs>
+    <!-- Organic-Digital Fusion Gradients -->
+    <linearGradient id="organic1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#11998e"/>
+      <stop offset="50%" style="stop-color:#38ef7d"/>
+      <stop offset="100%" style="stop-color:#11998e"/>
+    </linearGradient>
+    
+    <linearGradient id="organic2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fc466b"/>
+      <stop offset="50%" style="stop-color:#3f5efb"/>
+      <stop offset="100%" style="stop-color:#fc466b"/>
+    </linearGradient>
+    
+    <!-- Living Effect -->
+    <filter id="livingGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Depth Shadow -->
+    <filter id="organicShadow">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-color="#000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Organic Background - Like Living Tissue -->
+  <rect width="500" height="150" fill="#0f172a"/>
+  
+  <!-- The Concept: Digital Tree of Connection -->
+  <g transform="translate(30, 20)">
+    <!-- Main Trunk - Strong Foundation -->
+    <path d="M50 80 Q55 60 50 40 Q45 20 50 5" 
+          fill="none" stroke="url(#organic1)" stroke-width="6" stroke-linecap="round" filter="url(#organicShadow)"/>
+    
+    <!-- Branches - Different Paths -->
+    <path d="M50 40 Q30 30 20 15" fill="none" stroke="url(#organic2)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M50 40 Q70 30 80 15" fill="none" stroke="url(#organic2)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M50 60 Q35 50 25 35" fill="none" stroke="url(#organic1)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M50 60 Q65 50 75 35" fill="none" stroke="url(#organic1)" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Digital Leaves - Connection Points -->
+    <g filter="url(#livingGlow)">
+      <circle cx="20" cy="15" r="8" fill="#38ef7d" opacity="0.8"/>
+      <circle cx="80" cy="15" r="8" fill="#38ef7d" opacity="0.8"/>
+      <circle cx="25" cy="35" r="6" fill="#fc466b" opacity="0.7"/>
+      <circle cx="75" cy="35" r="6" fill="#fc466b" opacity="0.7"/>
+      <circle cx="50" cy="5" r="10" fill="#3f5efb" opacity="0.9"/>
+    </g>
+    
+    <!-- Root System - Foundation -->
+    <path d="M50 80 Q40 95 30 110" fill="none" stroke="url(#organic1)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M50 80 Q60 95 70 110" fill="none" stroke="url(#organic1)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M50 80 Q50 100 50 120" fill="none" stroke="url(#organic2)" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Digital Circuit Patterns on Tree -->
+    <g stroke="#ffffff" stroke-width="0.5" fill="none" opacity="0.3">
+      <circle cx="50" cy="40" r="15"/>
+      <circle cx="50" cy="60" r="10"/>
+      <line x1="50" y1="25" x2="50" y2="55"/>
+      <line x1="35" y1="40" x2="65" y2="40"/>
+    </g>
+    
+    <!-- Floating Spores - Ideas/Talent -->
+    <g fill="#38ef7d" opacity="0.6">
+      <circle cx="15" cy="50" r="2"/>
+      <circle cx="85" cy="45" r="3"/>
+      <circle cx="40" cy="70" r="2"/>
+      <circle cx="60" cy="65" r="2"/>
+      <circle cx="30" cy="85" r="1.5"/>
+      <circle cx="70" cy="80" r="2"/>
+    </g>
+  </g>
+  
+  <!-- Typography That Feels Alive -->
+  <g transform="translate(140, 55)">
+    <!-- SUNN - Growing, Organic -->
+    <text x="0" y="0" font-family="Georgia, serif" font-size="48" font-weight="bold">
+      <tspan fill="url(#organic1)">S</tspan><tspan fill="#38ef7d">U</tspan><tspan fill="#11998e">N</tspan><tspan fill="url(#organic1)">N</tspan>
+    </text>
+    
+    <!-- TECH - Structured, Digital -->
+    <text x="130" y="0" font-family="Arial, sans-serif" font-size="48" font-weight="900">
+      <tspan fill="url(#organic2)">T</tspan><tspan fill="#fc466b">E</tspan><tspan fill="#3f5efb">C</tspan><tspan fill="url(#organic2)">H</tspan>
+    </text>
+  </g>
+  
+  <!-- Slogan as Growth Story -->
+  <g transform="translate(140, 95)">
+    <text x="0" y="0" font-family="Georgia, serif" font-size="16" fill="#38ef7d" font-style="italic">
+      Growing connections
+    </text>
+    <text x="0" y="20" font-family="Georgia, serif" font-size="16" fill="#fc466b" font-style="italic">
+      Securing futures
+    </text>
+    
+    <!-- Organic Underline -->
+    <path d="M0 30 Q75 35 150 30 Q225 25 300 30" 
+          fill="none" stroke="url(#organic1)" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Living Ecosystem Elements -->
+  <g transform="translate(420, 30)">
+    <!-- Small ecosystem nodes -->
+    <circle cx="20" cy="20" r="6" fill="none" stroke="url(#organic1)" stroke-width="2"/>
+    <circle cx="20" cy="20" r="3" fill="#38ef7d"/>
+    
+    <circle cx="40" cy="40" r="5" fill="none" stroke="url(#organic2)" stroke-width="2"/>
+    <circle cx="40" cy="40" r="2.5" fill="#fc466b"/>
+    
+    <circle cx="20" cy="60" r="4" fill="none" stroke="url(#organic1)" stroke-width="2"/>
+    <circle cx="20" cy="60" r="2" fill="#3f5efb"/>
+    
+    <!-- Connection lines like mycelium -->
+    <path d="M20 20 Q30 30 40 40 Q30 50 20 60" 
+          fill="none" stroke="url(#organic1)" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  </g>
+  
+  <!-- Organic Corner Accents -->
+  <g opacity="0.4">
+    <path d="M10 10 Q10 20 20 10" fill="none" stroke="#38ef7d" stroke-width="2"/>
+    <path d="M490 10 Q490 20 480 10" fill="none" stroke="#fc466b" stroke-width="2"/>
+    <path d="M10 140 Q10 130 20 140" fill="none" stroke="#3f5efb" stroke-width="2"/>
+    <path d="M490 140 Q490 130 480 140" fill="none" stroke="#11998e" stroke-width="2"/>
+  </g>
+</svg>

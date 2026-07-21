@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" width="500" height="150">
+  <defs>
+    <!-- Revolutionary Color Palette -->
+    <linearGradient id="revolution1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF0080"/>
+      <stop offset="50%" style="stop-color:#7928CA"/>
+      <stop offset="100%" style="stop-color:#FF0080"/>
+    </linearGradient>
+    
+    <linearGradient id="revolution2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00DFD8"/>
+      <stop offset="50%" style="stop-color:#007CF0"/>
+      <stop offset="100%" style="stop-color:#00DFD8"/>
+    </linearGradient>
+    
+    <!-- Holographic Effect -->
+    <filter id="holographic">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur"/>
+      <feColorMatrix in="blur" type="hueRotate" values="0 30 0 0 0  0 30 0 0 0  0 30 0 0 0  0 0 0 1 0" result="hologram"/>
+      <feBlend in="SourceGraphic" in2="hologram" mode="screen"/>
+    </filter>
+    
+    <!-- Glitch Displacement -->
+    <filter id="glitchDisplace">
+      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence"/>
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  
+  <!-- Split Background - Half Dark, Half Light -->
+  <rect width="250" height="150" fill="#0a0a0a"/>
+  <rect x="250" width="250" height="150" fill="#f0f0f0"/>
+  
+  <!-- Revolutionary Logo Mark - Human + Technology Fusion -->
+  <g transform="translate(30, 25)">
+    <!-- Abstract Human Silhouette -->
+    <path d="M30 5 C45 5 55 15 55 30 C55 45 45 55 30 55 C15 55 5 45 5 30 C5 15 15 5 30 5" 
+          fill="none" stroke="url(#revolution1)" stroke-width="3" filter="url(#holographic)"/>
+    
+    <!-- Technology Circuit Pattern Inside -->
+    <g stroke="url(#revolution2)" stroke-width="1.5" fill="none">
+      <circle cx="30" cy="30" r="8"/>
+      <circle cx="20" cy="25" r="3"/>
+      <circle cx="40" cy="25" r="3"/>
+      <circle cx="30" cy="40" r="3"/>
+      <line x1="30" y1="22" x2="30" y2="18"/>
+      <line x1="30" y1="38" x2="30" y2="42"/>
+      <line x1="22" y1="30" x2="18" y2="30"/>
+      <line x1="38" y1="30" x2="42" y2="30"/>
+    </g>
+    
+    <!-- Digital Eye - The "Vision" Element -->
+    <ellipse cx="30" cy="30" rx="12" ry="6" fill="none" stroke="#00DFD8" stroke-width="2"/>
+    <circle cx="30" cy="30" r="4" fill="#FF0080"/>
+    <circle cx="30" cy="30" r="2" fill="#FFFFFF"/>
+    
+    <!-- Connection Rays -->
+    <g stroke="#7928CA" stroke-width="1" opacity="0.6">
+      <line x1="55" y1="30" x2="75" y2="30"/>
+      <line x1="5" y1="30" x2="-15" y2="30"/>
+      <line x1="30" y1="5" x2="30" y2="-15"/>
+      <line x1="30" y1="55" x2="30" y2="75"/>
+    </g>
+    
+    <!-- Floating Data Particles -->
+    <circle cx="80" cy="20" r="4" fill="#00DFD8" opacity="0.7"/>
+    <circle cx="-10" cy="45" r="3" fill="#FF0080" opacity="0.6"/>
+    <circle cx="70" cy="50" r="2" fill="#7928CA" opacity="0.8"/>
+  </g>
+  
+  <!-- Typography That Bridges Both Worlds -->
+  <g transform="translate(120, 60)">
+    <!-- SUNN - Each letter unique -->
+    <text x="0" y="0" font-family="Arial Black, sans-serif" font-size="48" font-weight="900">
+      <tspan fill="#FF0080">S</tspan>
+    </text>
+    
+    <!-- U with circuit pattern -->
+    <text x="35" y="0" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" fill="#0a0a0a">
+      U
+    </text>
+    <g stroke="#007CF0" stroke-width="1" fill="none">
+      <circle cx="52" cy="-18" r="5"/>
+      <line x1="52" y1="-23" x2="52" y2="-28"/>
+    </g>
+    
+    <!-- N with gradient -->
+    <text x="75" y="0" font-family="Arial Black, sans-serif" font-size="48" font-weight="900">
+      <tspan fill="url(#revolution2)">N</tspan>
+    </text>
+    
+    <!-- N with holographic effect -->
+    <text x="115" y="0" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" fill="#0a0a0a" filter="url(#holographic)">
+      N
+    </text>
+    
+    <!-- TECH - Breaking the boundary -->
+    <text x="160" y="0" font-family="Arial Black, sans-serif" font-size="48" font-weight="900">
+      <tspan fill="#7928CA">T</tspan><tspan fill="#00DFD8">E</tspan><tspan fill="#FF0080">C</tspan><tspan fill="#007CF0">H</tspan>
+    </text>
+  </g>
+  
+  <!-- Slogan as Visual Story -->
+  <g transform="translate(120, 95)">
+    <!-- First part - Connecting Talent -->
+    <text x="0" y="0" font-family="Georgia, serif" font-size="16" font-style="italic" fill="#0a0a0a">
+      Connecting
+    </text>
+    <text x="85" y="0" font-family="Georgia, serif" font-size="16" font-style="italic" fill="#FF0080">
+      Talent
+    </text>
+    
+    <!-- Visual connector -->
+    <path d="M0 10 Q75 15 150 10" fill="none" stroke="#7928CA" stroke-width="1.5" stroke-dasharray="3,3"/>
+    
+    <!-- Second part - Securing Businesses -->
+    <text x="0" y="25" font-family="Georgia, serif" font-size="16" font-style="italic" fill="#007CF0">
+      Securing
+    </text>
+    <text x="70" y="25" font-family="Georgia, serif" font-size="16" font-style="italic" fill="#0a0a0a">
+      Businesses
+    </text>
+  </g>
+  
+  <!-- Revolutionary Decorative Elements -->
+  <g transform="translate(400, 30)">
+    <!-- DNA Helix Abstract -->
+    <path d="M0 0 Q10 25 0 50 Q-10 75 0 100" fill="none" stroke="url(#revolution1)" stroke-width="2"/>
+    <path d="M0 0 Q-10 25 0 50 Q10 75 0 100" fill="none" stroke="url(#revolution2)" stroke-width="2"/>
+    
+    <!-- Connection Points -->
+    <circle cx="0" cy="25" r="3" fill="#FF0080"/>
+    <circle cx="0" cy="50" r="3" fill="#00DFD8"/>
+    <circle cx="0" cy="75" r="3" fill="#7928CA"/>
+  </g>
+  
+  <!-- Split Line Accent -->
+  <line x1="250" y1="10" x2="250" y2="140" stroke="url(#revolution1)" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Corner Accents on Both Sides -->
+  <path d="M10 10 L10 25 L25 10" fill="none" stroke="#FF0080" stroke-width="2"/>
+  <path d="M490 10 L490 25 L475 10" fill="none" stroke="#00DFD8" stroke-width="2"/>
+  <path d="M10 140 L10 125 L25 140" fill="none" stroke="#7928CA" stroke-width="2"/>
+  <path d="M490 140 L490 125 L475 140" fill="none" stroke="#007CF0" stroke-width="2"/>
+</svg>

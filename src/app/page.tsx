@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
+import InteractiveKeyboard from "@/components/InteractiveKeyboard"
 import { projects } from "@/data/projects"
 
 export default function Home() {
@@ -160,6 +161,12 @@ export default function Home() {
                 </Link>
               </Button>
             </div>
+          </div>
+        </section>
+
+        <section className="py-16 scanline">
+          <div className="container mx-auto px-4">
+            <InteractiveKeyboard />
           </div>
         </section>
 
