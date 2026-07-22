@@ -1,11 +1,9 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import connectDB from '@/lib/mongodb'
-import User from '@/models/User'
-import { logLoginAttempt, logAccountLockout } from '@/lib/security-logger'
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -19,6 +17,11 @@ const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Email and password are required')
         }
+
+        // Lazy load dependencies to prevent build-time evaluation
+        const connectDB = (await import('@/lib/mongodb')).default
+        const User = (await import('@/models/User')).default
+        const { logLoginAttempt, logAccountLockout } = await import('@/lib/security-logger')
 
         try {
           await connectDB()
