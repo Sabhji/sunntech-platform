@@ -7,7 +7,7 @@ import { logLoginAttempt, logAccountLockout } from '@/lib/security-logger'
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic'
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
