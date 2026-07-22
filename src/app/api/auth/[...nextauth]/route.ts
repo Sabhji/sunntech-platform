@@ -20,46 +20,59 @@ const authOptions: NextAuthOptions = {
           throw new Error('Email and password are required')
         }
 
-        await connectDB()
-
-        const user = await User.findOne({ email: credentials.email.toLowerCase() })
-
-        if (!user) {
-          logLoginAttempt('unknown', 'unknown', 'unknown', false)
-          throw new Error('Invalid email or password')
+        try {
+          await connectDB()
+        } catch (error) {
+          console.error('MongoDB connection error:', error)
+          throw new Error('Database connection failed. Please check your environment variables.')
         }
 
-        // Check if account is locked
-        if (user.isLocked()) {
-          logAccountLockout(user._id.toString(), 'unknown', 'unknown')
-          throw new Error('Account is temporarily locked due to multiple failed attempts')
-        }
+        try {
+          const user = await User.findOne({ email: credentials.email.toLowerCase() })
 
-        // Check if account is active
-        if (!user.isActive) {
-          throw new Error('Account has been deactivated')
-        }
+          if (!user) {
+            logLoginAttempt('unknown', 'unknown', 'unknown', false)
+            throw new Error('Invalid email or password')
+          }
 
-        // Verify password
-        const isPasswordValid = await user.comparePassword(credentials.password)
+          // Check if account is locked
+          if (user.isLocked()) {
+            logAccountLockout(user._id.toString(), 'unknown', 'unknown')
+            throw new Error('Account is temporarily locked due to multiple failed attempts')
+          }
 
-        if (!isPasswordValid) {
-          user.incrementFailedLogin()
+          // Check if account is active
+          if (!user.isActive) {
+            throw new Error('Account has been deactivated')
+          }
+
+          // Verify password
+          const isPasswordValid = await user.comparePassword(credentials.password)
+
+          if (!isPasswordValid) {
+            user.incrementFailedLogin()
+            await user.save()
+            logLoginAttempt(user._id.toString(), 'unknown', 'unknown', false)
+            throw new Error('Invalid email or password')
+          }
+
+          // Reset failed login attempts on successful login
+          user.resetFailedLogin()
           await user.save()
-          logLoginAttempt(user._id.toString(), 'unknown', 'unknown', false)
-          throw new Error('Invalid email or password')
-        }
+          logLoginAttempt(user._id.toString(), 'unknown', 'unknown', true)
 
-        // Reset failed login attempts on successful login
-        user.resetFailedLogin()
-        await user.save()
-        logLoginAttempt(user._id.toString(), 'unknown', 'unknown', true)
-
-        return {
-          id: user._id.toString(),
-          email: user.email,
-          name: user.name,
-          role: user.role,
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          }
+        } catch (error) {
+          if (error instanceof Error && (error.message === 'Invalid email or password' || error.message === 'Account has been deactivated' || error.message === 'Account is temporarily locked due to multiple failed attempts')) {
+            throw error
+          }
+          console.error('Auth error:', error)
+          throw new Error('Authentication failed')
         }
       }
     })
