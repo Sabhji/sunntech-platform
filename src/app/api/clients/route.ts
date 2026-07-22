@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import connectDB from '@/lib/mongodb'
-import Client from '@/models/Client'
-import { sanitizeMongoQuery, isValidObjectId } from '@/lib/mongodb'
-import { applyAPISecurityHeaders, applyCORSHeaders, checkAPIRateLimit } from '@/lib/api-security'
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 // GET all clients
 export async function GET(request: NextRequest) {
   try {
+    // Lazy load dependencies to prevent build-time evaluation
+    const connectDB = (await import('@/lib/mongodb')).default
+    const Client = (await import('@/models/Client')).default
+    const { sanitizeMongoQuery } = await import('@/lib/mongodb')
+    const { applyAPISecurityHeaders, applyCORSHeaders, checkAPIRateLimit } = await import('@/lib/api-security')
+    
     const response = NextResponse.next()
     applyAPISecurityHeaders(response)
     applyCORSHeaders(response, request.headers.get('origin') || undefined)
@@ -65,6 +68,11 @@ export async function GET(request: NextRequest) {
 // POST create new client
 export async function POST(request: NextRequest) {
   try {
+    // Lazy load dependencies to prevent build-time evaluation
+    const connectDB = (await import('@/lib/mongodb')).default
+    const Client = (await import('@/models/Client')).default
+    const { applyAPISecurityHeaders, applyCORSHeaders, checkAPIRateLimit } = await import('@/lib/api-security')
+    
     const response = NextResponse.next()
     applyAPISecurityHeaders(response)
     applyCORSHeaders(response, request.headers.get('origin') || undefined)

@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import connectDB from '@/lib/mongodb'
-import User from '@/models/User'
-import { validateAndSanitizeInput, registerSchema } from '@/lib/validation'
-import { logLoginAttempt } from '@/lib/security-logger'
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+    
+    // Lazy load dependencies to prevent build-time evaluation
+    const connectDB = (await import('@/lib/mongodb')).default
+    const User = (await import('@/models/User')).default
+    const { validateAndSanitizeInput, registerSchema } = await import('@/lib/validation')
+    const { logLoginAttempt } = await import('@/lib/security-logger')
     
     // Validate input
     const validation = validateAndSanitizeInput(registerSchema, body)
